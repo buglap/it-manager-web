@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Supplier {
+  id        String   @id @default(cuid())
+  nit       String
+  name      String
+  email     String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  role         Role          @relation(fields: [roleId], references: [id])
+  roleId       String
+  profile      Profile?      @relation(fields: [profileId], references: [id])
+  profileId    String
+  requitements Requirement[]
+  devices      Device[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  Position     Position?     @relation(fields: [positionId], references: [id])
+  positionId   String?
+}
+
+enum Enum_IdType {
+  national
+  foreign
+}
+
+model Profile {
+  id                   String      @id @default(cuid())
+  identificationType   Enum_IdType
+  identificationNumber String
+  name                 String
+  phone                String
+  direction            String
+  image                String?
+  position             Position?   @relation(fields: [positionId], references: [id])
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+  positionId           String
+  userId               String
+  User                 User[]
+}
+
+enum Enum_RolName {
+  Admin
+  Employee
+}
+
+model Role {
+  id        String       @id @default(cuid())
+  name      Enum_RolName
+  users     User[]
+  pages     Page[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  name      String
+  path      String
+  roles     Role[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Enum_PositionName {
+  developer
+  architect
+  managment
+}
+
+model Position {
+  id        String            @id @default(cuid())
+  name      Enum_PositionName
+  employees User[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  Profile   Profile[]
+}
+
+model Device {
+  id                String        @id @default(cuid())
+  name              String
+  description       String
+  brand             String
+  availableQuantiry Int
+  invoice           Invoice       @relation(fields: [invoiceId], references: [id])
+  invoiceId         String
+  deviceType        DeviceType    @relation(fields: [deviceTypeId], references: [id])
+  deviceTypeId      String
+  employees         User[]
+  requirements      Requirement[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  date      DateTime
+  url       String
+  devices   Device[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Enum_DeviceType {
+  Laptop
+  Mouse
+  Keyboard
+  Display
+  headband
+  Charger
+  Cell_phone
+}
+
+model DeviceType {
+  id        String          @id @default(cuid())
+  name      Enum_DeviceType
+  devices   Device[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+enum Enum_RequirementState {
+  approved
+  denied
+  pending
+}
+
+model Requirement {
+  id         String                @id @default(cuid())
+  reason     String
+  isApproved Enum_RequirementState @default(pending)
+  comments   String
+  devices    Device[]
+  employee   User                  @relation(fields: [employeeId], references: [id])
+  employeeId String
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+}
