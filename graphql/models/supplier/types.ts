@@ -11,7 +11,7 @@ const SupplierTypes = gql`
     updatedAt: Date
   }
   type Query {
-    getSuppliers: [SupplierTypes]
+    getSuppliers: [Supplier]
   }
 `;
 

@@ -21,18 +21,23 @@ model Supplier {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  role         Role          @relation(fields: [roleId], references: [id])
-  roleId       String
-  profile      Profile?      @relation(fields: [profileId], references: [id])
-  profileId    String
-  requitements Requirement[]
-  devices      Device[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  Position     Position?     @relation(fields: [positionId], references: [id])
-  positionId   String?
+  id            String        @id @default(cuid())
+  email         String?       @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  role          Role?         @relation(fields: [roleId], references: [id])
+  roleId        String?
+  profile       Profile?      @relation(fields: [profileId], references: [id])
+  profileId     String?
+  requitements  Requirement[]
+  devices       Device[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Position      Position?     @relation(fields: [positionId], references: [id])
+  positionId    String?
+  Account       Account[]
+  Session       Session[]
 }
 
 enum Enum_IdType {
@@ -44,10 +49,8 @@ model Profile {
   id                   String      @id @default(cuid())
   identificationType   Enum_IdType
   identificationNumber String
-  name                 String
   phone                String
   direction            String
-  image                String?
   position             Position?   @relation(fields: [positionId], references: [id])
   createdAt            DateTime    @default(now())
   updatedAt            DateTime    @updatedAt
@@ -153,4 +156,38 @@ model Requirement {
   employeeId String
   createdAt  DateTime              @default(now())
   updatedAt  DateTime              @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
