@@ -3,7 +3,6 @@ import { RoleTypes } from 'graphql/models/role/types';
 import { DeviceTypes } from './models/device/types';
 import { DeviceTypeTypes } from './models/devicetype/types';
 import { InvoiceTypes } from './models/invoice/types';
-import { PageTypes } from './models/page/types';
 import { PositionTypes } from './models/position/types';
 import { ProfileTypes } from './models/profile/types';
 import { RequirementTypes } from './models/requirement/types';
@@ -34,7 +33,6 @@ export const types = [
     DeviceTypeTypes,
     DeviceTypes,
     InvoiceTypes,
-    PageTypes,
     ProfileTypes,
     RequirementTypes,
     SupplierTypes,

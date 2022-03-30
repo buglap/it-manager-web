@@ -36,8 +36,8 @@ model User {
   updatedAt     DateTime      @updatedAt
   Position      Position?     @relation(fields: [positionId], references: [id])
   positionId    String?
-  Account       Account[]
-  Session       Session[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
 enum Enum_IdType {
@@ -51,6 +51,7 @@ model Profile {
   identificationNumber String
   phone                String
   direction            String
+  image                String
   position             Position?   @relation(fields: [positionId], references: [id])
   createdAt            DateTime    @default(now())
   updatedAt            DateTime    @updatedAt
@@ -66,7 +67,7 @@ enum Enum_RolName {
 
 model Role {
   id        String       @id @default(cuid())
-  name      Enum_RolName
+  name      Enum_RolName @unique
   users     User[]
   pages     Page[]
   createdAt DateTime     @default(now())
@@ -76,7 +77,7 @@ model Role {
 model Page {
   id        String   @id @default(cuid())
   name      String
-  path      String
+  path      String   @unique
   roles     Role[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -29,6 +29,29 @@ const UserResolvers = {
             });
         },
     },
+    Mutation: {
+        createUserAccount: async (parent, args) => {
+            return await prisma.user.create({
+                data: {
+                    email: args.data.email,
+                    name: args.data.name,
+                    image: args.data.image,
+                    role: {
+                        connect: {
+                            name: args.data.role,
+                        },
+                    },
+                    accounts: {
+                        create: {
+                            provider: 'auth0',
+                            type: 'oauth',
+                            providerAccountId: args.data.auth0Id,
+                        },
+                    },
+                },
+            });
+        },
+    },
 };
 
 export { UserResolvers };

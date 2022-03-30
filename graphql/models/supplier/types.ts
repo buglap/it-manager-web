@@ -13,6 +13,12 @@ const SupplierTypes = gql`
   type Query {
     getSuppliers: [Supplier]
   }
+
+  type Mutation {
+    createSupplier(nit: String, name: String, phone: String, email: String): Supplier
+    updateSupplier(id: String!, nit: String, name: String, phone: String, email: String): Supplier
+    deleteSupplier(id: String!): Supplier
+  }
 `;
 
 export { SupplierTypes };

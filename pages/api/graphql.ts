@@ -5,6 +5,7 @@ import Cors from 'micro-cors';
 import { types } from 'graphql/types';
 import { resolvers } from 'graphql/resolvers';
 import { getSession } from 'next-auth/react';
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const cors = Cors({
     allowMethods: ['POST', 'OPTIONS', 'GET', 'HEAD'],
@@ -18,10 +19,10 @@ export const config = {
 
 const functionHandler = async (req, res) => {
     const apolloServer = new ApolloServer({
-        // context: async () => {
-        //     const data: any = await getSession({ req });
-        //     return { session: data };
-        // },
+        context: async () => {
+            const data: any = await getSession({ req });
+            return { session: data };
+        },
         typeDefs: types,
         resolvers,
         introspection: true,
@@ -34,14 +35,14 @@ const functionHandler = async (req, res) => {
     })(req, res);
 };
 
-export default cors(async (req, res) => {
+export default cors(async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'OPTIONS') {
         res.end();
         return false;
     }
-    //const data: any = await getSession({ req });
-    // if (!data && process.env.NODE_ENV === 'production') {
-    //     res.status(401).send({ error: 'no autorizado' });
-    // }
+    const data: any = await getSession({ req });
+    if (!data && process.env.NODE_ENV === 'production') {
+        res.status(401).send({ error: 'no autorizado' });
+    }
     return functionHandler(req, res);
 });

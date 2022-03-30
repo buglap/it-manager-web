@@ -1,15 +1,22 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
+import { matchRoles } from "utils/matchRoles";
 
 const GET_DEVICES = gql`
-    query Query {
+    query GetDevices {
         getDevices {
-            id 
             name
-            availableQuantity
+            id
+            availableQuantiry
+            }
         }
-    }
 `;
+
+export async function getServerSideProps(context) {
+    return {
+      props: { ...(await matchRoles(context)) },
+    };
+  }
 
 const IndexDevices = () => {
     const { data, loading } = useQuery(GET_DEVICES);
@@ -17,8 +24,8 @@ const IndexDevices = () => {
     return (
         <div>
             <h2>Devices</h2>
-            {data.getDevices.map((d) =>{
-                return(
+            {data.getDevices.map((d) => {
+                return (
                     <div key={d.id}>
                         <span>name: {d.name}</span>
                         <span>disponibles: {d.availableQuantity}</span>

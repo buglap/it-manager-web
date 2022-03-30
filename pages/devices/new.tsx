@@ -1,5 +1,12 @@
 import useFormData from 'hooks/useFormData';
 import React from 'react'
+import { matchRoles } from 'utils/matchRoles';
+
+export async function getServerSideProps(context) {
+    return {
+      props: { ...(await matchRoles(context)) },
+    };
+  }
 
 const newDevice = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
