@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const GET_USER_PROFILE = gql`
-  query GetUser($email: String!) {
+   query GetUser($email: String!) {
     getUser(email: $email) {
       id
       image
@@ -18,7 +18,13 @@ const GET_USER_PROFILE = gql`
           name
         }
       }
-  }
+      role {
+        pages {
+          path
+          name
+        }
+      }
+    }
 }
 `;
 

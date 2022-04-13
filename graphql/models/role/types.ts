@@ -8,6 +8,7 @@ const RoleTypes = gql`
   type Role {
     id: ID
     name: Enum_RolName
+    pages: [Page]
     createdAt: Date
     updatedAt: Date
   }

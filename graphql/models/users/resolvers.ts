@@ -6,7 +6,8 @@ const UserResolvers = {
             return await prisma.role.findUnique({
                 where: {
                     id: parent.roleId
-                }
+                },
+                include: { pages: true }
             });
         },
         profile: async (parent, args) => {

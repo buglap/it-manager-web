@@ -23,7 +23,7 @@ const PrivateLayout = ({ pageAuth, children }: any) => {
 
   return (
     <div>
-      <Navbar fixed={undefined}/>
+      <Navbar/>
       {children}
       <ToastContainer />
     </div>
