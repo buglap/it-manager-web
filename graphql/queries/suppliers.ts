@@ -8,6 +8,8 @@ const GET_SUPPLIERS = gql`
       name
       email
       phone
+      updatedAt
+      createdAt
     }
   }
 `;

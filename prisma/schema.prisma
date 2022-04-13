@@ -28,14 +28,11 @@ model User {
   image         String?
   role          Role?         @relation(fields: [roleId], references: [id])
   roleId        String?
-  profile       Profile?      @relation(fields: [profileId], references: [id])
-  profileId     String?
+  profile       Profile?
   requitements  Requirement[]
   devices       Device[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-  Position      Position?     @relation(fields: [positionId], references: [id])
-  positionId    String?
   accounts      Account[]
   sessions      Session[]
 }
@@ -46,18 +43,18 @@ enum Enum_IdType {
 }
 
 model Profile {
-  id                   String      @id @default(cuid())
-  identificationType   Enum_IdType
-  identificationNumber String
-  phone                String
-  direction            String
-  image                String
-  position             Position?   @relation(fields: [positionId], references: [id])
-  createdAt            DateTime    @default(now())
-  updatedAt            DateTime    @updatedAt
-  positionId           String
-  userId               String
-  User                 User[]
+  id                   String       @id @default(cuid())
+  identificationType   Enum_IdType?
+  identificationNumber String?
+  phone                String?
+  direction            String?
+  image                String?
+  position             Position?    @relation(fields: [positionId], references: [id])
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  positionId           String?
+  user                 User         @relation(fields: [userId], references: [id])
+  userId               String       @unique
 }
 
 enum Enum_RolName {
@@ -92,10 +89,9 @@ enum Enum_PositionName {
 model Position {
   id        String            @id @default(cuid())
   name      Enum_PositionName
-  employees User[]
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
-  Profile   Profile[]
+  employees Profile[]
 }
 
 model Device {
@@ -104,23 +100,13 @@ model Device {
   description       String
   brand             String
   availableQuantiry Int
-  invoice           Invoice       @relation(fields: [invoiceId], references: [id])
-  invoiceId         String
+  invoice           String
   deviceType        DeviceType    @relation(fields: [deviceTypeId], references: [id])
   deviceTypeId      String
   employees         User[]
   requirements      Requirement[]
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
-}
-
-model Invoice {
-  id        String   @id @default(cuid())
-  date      DateTime
-  url       String
-  devices   Device[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 enum Enum_DeviceType {

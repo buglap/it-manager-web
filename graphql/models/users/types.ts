@@ -6,6 +6,7 @@ const UserTypes = gql`
     email: String
     role: Role
     profile: Profile
+    image: String
     requirements: [Requirement]
     devices: [Device]
     createdAt: Date
@@ -19,6 +20,7 @@ const UserTypes = gql`
   input CreateUserAccountInput {
     email: String!
     name: String!
+    image: String!
     auth0Id: String!
     role: String!
   }

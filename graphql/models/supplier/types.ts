@@ -15,8 +15,8 @@ const SupplierTypes = gql`
   }
 
   type Mutation {
-    createSupplier(nit: String, name: String, phone: String, email: String): Supplier
-    updateSupplier(id: String!, nit: String, name: String, phone: String, email: String): Supplier
+    createSupplier(nit: String!, name: String!, phone: String!, email: String!): Supplier
+    updateSupplier(id: String!, nit: String!, name: String!, phone: String,! email: String!): Supplier
     deleteSupplier(id: String!): Supplier
   }
 `;

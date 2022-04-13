@@ -1,9 +1,9 @@
 import React from 'react';
-import Footer from 'components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import NotAuthorized from '@components/NoAuthorized';
+import Navbar from '@components/Navbar';
 
 const PrivateLayout = ({ pageAuth, children }: any) => {
   const { data: session, status } = useSession();
@@ -23,12 +23,9 @@ const PrivateLayout = ({ pageAuth, children }: any) => {
 
   return (
     <div>
-      <button type='button' onClick={() => signOut()}>
-        Cerrar Sesion
-      </button>
+      <Navbar fixed={undefined}/>
       {children}
       <ToastContainer />
-      <Footer />
     </div>
   );
 };

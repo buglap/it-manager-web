@@ -12,8 +12,8 @@ const UserResolvers = {
         profile: async (parent, args) => {
             return await prisma.profile.findUnique({
                 where: {
-                    id: parent.profileId
-                }
+                    userId: parent.id,
+                },
             });
         },
     },
