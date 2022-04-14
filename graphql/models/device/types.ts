@@ -2,6 +2,16 @@ import { gql } from 'apollo-server-micro';
 
 const DeviceTypes = gql`
 
+  enum Enum_DeviceType {
+      Laptop
+      Mouse
+      Keyboard
+      Display
+      headband
+      Charger
+      Cell_phone
+    }
+
   type Device {
     id: ID
     name: String
@@ -9,43 +19,22 @@ const DeviceTypes = gql`
     brand: String
     availableQuantiry: Int
     invoice: String
-    deviceType: DeviceType
+    deviceType: Enum_DeviceType
     employees: [User]
     requirements: [Requirement]
     createdAt: Date
     updatedAt: Date
   }
 
-  input DeviceFilterId {
-    id: String!
-  }
-
-  input DeviceCreateInput {
-    name: String!
-    decription: String!
-    brand: String!
-    availableQuantiry: Int!
-    deviceType: String!
-    invoice: String!
-  }
-
-  input DeviceUpdateInput {
-    name: String!
-    decription: String!
-    brand: String!
-    availableQuantiry: Int!
-    deviceTypeId: String!
-    invoice: String!
-  }
   type Query {
     getDevices: [Device]
-    getDevice(where: DeviceFilterId!): Device
+    getDevice(id: String!): Device
   }
 
   type Mutation {
-    createDevice(data: DeviceCreateInput!): Device
-    updateDevice(where: DeviceFilterId!, data: DeviceUpdateInput!): Device
-    deleteDevice(where: DeviceFilterId!): Device
+    createDevice(name: String!, decription: String!, brand: String!, availableQuantiry: Int!, deviceType: String!, invoice: String!): Device
+    updateDevice(id: String!, name: String!, decription: String!, brand: String!, availableQuantiry: Int!, deviceType: String!, invoice: String!): Device
+    deleteDevice(id: String!): Device
   }
 `;
 

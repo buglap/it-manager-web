@@ -2,13 +2,6 @@ import prisma from "config/prisma";
 
 const DeviceResolvers = {
     Device: {
-        deviceType: async (parent, args) => {
-            return await prisma.deviceType.findUnique({
-                where: {
-                    id: parent.deviceTypeId
-                }
-            });
-        },
         createdAt: async (parent, _, context) => {
             return parent.createdAt;
         },
@@ -21,6 +14,61 @@ const DeviceResolvers = {
             return await prisma.device.findMany();
         },
     },
+    Mutation: {
+        createDevice: async (_, args, context) => {
+            if (context.session.user.role.name === 'Admin') {
+                const newDevice = await prisma.device.create({
+                    data: {
+                        name: args.name,
+                        description: args.description,
+                        brand: args.brand,
+                        availableQuantiry: args.availableQuantiry,
+                        deviceType: args.deviceType,
+                        invoice: args.invoice
+                    }
+                });
+                return newDevice;
+            }
+        },
+        updateDevice: async (_, args, context) => {
+            if (context.session.user.role.name === 'Admin') {
+                return await prisma.device.update({
+                    where: {
+                        id: args.id,
+                    },
+                    data: {
+                        name: {
+                            set: args.name,
+                        },
+                        description: {
+                            set: args.description
+                        },
+                        brand: {
+                            set: args.brand
+                        },
+                        availableQuantiry: {
+                            set: args.availableQuantiry
+                        },
+                        deviceType: {
+                            set: args.deviceType
+                        },
+                        invoice: {
+                            set: args.invoice
+                        }
+                    },
+                });
+            }
+        },
+        deleteDevice: async (_, args, context) => {
+            if (context.session.user.role.name === 'Admin') {
+                return await prisma.device.delete({
+                    where: {
+                        id: args.id,
+                    },
+                });
+            }
+        },
+    }
 };
 
 export { DeviceResolvers };

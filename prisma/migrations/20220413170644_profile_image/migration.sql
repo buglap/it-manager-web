@@ -1,6 +1,0 @@
--- AlterTable
-ALTER TABLE "Profile" ALTER COLUMN "identificationType" DROP NOT NULL,
-ALTER COLUMN "identificationNumber" DROP NOT NULL,
-ALTER COLUMN "phone" DROP NOT NULL,
-ALTER COLUMN "direction" DROP NOT NULL,
-ALTER COLUMN "image" DROP NOT NULL;

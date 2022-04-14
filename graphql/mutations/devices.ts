@@ -1,23 +1,23 @@
 import { gql } from '@apollo/client';
 
 const CREATE_DEVICES = gql`
-  mutation CreateDevice($data: DeviceCreateInput!) {
-    createDevice(data: $data) {
+  mutation CreateDevice($name: String!, $decription: String!, $brand: String!, $availableQuantiry: Int!, $deviceType: String!, $invoice: String!) {
+    createDevice(name: $name, decription: $decription, brand: $brand, availableQuantiry: $availableQuantiry, deviceType: $deviceType, invoice: $invoice) {
       id
     }
   }
 `;
 
 const EDIT_DEVICES = gql`
-  mutation UpdateDevice($where: DeviceFilterId!, $data: DeviceUpdateInput!) {
-    updateDevice(where: $where, data: $data){
+  mutation UpdateDevice($id: String!, $name: String!, $decription: String!, $brand: String!, $availableQuantiry: Int!, $deviceType: String!, $invoice: String!) {
+    updateDevice(id: $id, name: $name, decription: $decription, brand: $brand, availableQuantiry: $availableQuantiry, deviceType: $deviceType, invoice: $invoice) {
       id
     }
   }
 `;
 
 const DELETE_DEVICES = gql`
-  mutation DeleteDevice($where: DeviceFilterId!) {
+  mutation DeleteDevice($id: String!) {
     deleteDevice(where: $where) {
       id
     }

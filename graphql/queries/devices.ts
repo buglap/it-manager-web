@@ -11,10 +11,7 @@ const GET_DEVICES = gql`
             invoice
             createdAt
             updatedAt
-            deviceType {
-                id
-                name
-            }
+            deviceType 
         }
     }
 `;

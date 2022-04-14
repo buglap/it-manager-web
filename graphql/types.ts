@@ -2,7 +2,6 @@ import { gql } from 'apollo-server-micro';
 import { RoleTypes } from 'graphql/models/role/types';
 import { ReportChartTypes } from './models/chart/types';
 import { DeviceTypes } from './models/device/types';
-import { DeviceTypeTypes } from './models/devicetype/types';
 import { PageTypes } from './models/pages/types';
 import { PositionTypes } from './models/position/types';
 import { ProfileTypes } from './models/profile/types';
@@ -31,7 +30,6 @@ export const types = [
   genericTypes,
   RoleTypes,
   UserTypes,
-  DeviceTypeTypes,
   DeviceTypes,
   ProfileTypes,
   RequirementTypes,
