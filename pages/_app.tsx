@@ -10,7 +10,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: from([
     new HttpLink({
-      uri: 'http://it-manager-web.vercel.app/api/graphql',
+      uri: 'https://it-manager-web.vercel.app/api/graphql',
     }),
   ]),
 });
