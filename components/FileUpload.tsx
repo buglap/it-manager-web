@@ -12,8 +12,8 @@ const FileUpload = ({
     <Widget
       sources={['local', 'camera']}
       resourceType={resourceType} // optionally set with 'auto', 'image', 'video' or 'raw' -> default = 'auto'
-      cloudName='dzpectxst' // your cloudinary account cloud name.
-      uploadPreset='vpok7gal' // check that an upload preset exists and check mode is signed or unisgned
+      cloudName={process.env.CLOUD_NAME} // your cloudinary account cloud name.
+      uploadPreset={process.env.CLOUD_UPLOAD_PRESENT} // check that an upload preset exists and check mode is signed or unisgned
       buttonText={text} // default 'Upload Files'
       folder={folder} // set cloudinary folder name to send file
       autoClose={false} // will close the widget after success. Default true
@@ -21,7 +21,7 @@ const FileUpload = ({
       onFailure={errorCallback} // add failure callback -> returns 'response.error' + 'response.result'
       logging={false} // logs will be provided for success and failure messages,
       destroy // will destroy the widget on completion
-      apiKey={819872248362889} // cloudinary API key -> number format
+      apiKey={process.env.CLOUD_API_KEY} // cloudinary API key -> number format
     />
   );
 };

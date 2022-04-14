@@ -95,17 +95,17 @@ model Position {
 }
 
 model Device {
-  id                String          @id @default(cuid())
-  name              String
-  description       String
-  brand             String
-  availableQuantiry Int
-  invoice           String
-  deviceType        Enum_DeviceType
+  id                String           @id @default(cuid())
+  name              String?
+  description       String?
+  brand             String?
+  availableQuantiry Int?
+  invoice           String?
+  deviceType        Enum_DeviceType?
   employees         User[]
   requirements      Requirement[]
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
 
 enum Enum_DeviceType {

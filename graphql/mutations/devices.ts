@@ -18,7 +18,7 @@ const EDIT_DEVICES = gql`
 
 const DELETE_DEVICES = gql`
   mutation DeleteDevice($id: String!) {
-    deleteDevice(where: $where) {
+    deleteDevice(id: $id) {
       id
     }
   }

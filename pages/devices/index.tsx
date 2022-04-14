@@ -202,7 +202,7 @@ const EditDevice = ({ device, closeDialog }) => {
             variables: {
                 id: device.id,
                 name: formData.name,
-                decription: formData.description,
+                description: formData.description,
                 brand: formData.brand,
                 availableQuantiry: formData.availableQuantiry,
                 deviceType: formData.deviceType,
@@ -288,12 +288,12 @@ const CreateDevice = ({ device, closeDialog }) => {
         e.preventDefault();
         await createDevice({
             variables: {
-                name: formData.name,
-                decription: formData.description,
+                name:  formData.name, 
+                decription: formData.description, 
                 brand: formData.brand,
                 availableQuantiry: formData.availableQuantiry,
-                deviceType: formData.deviceType,
-                invoice: fileUrl,
+                deviceType: formData.deviceType, 
+                invoice: fileUrl
             },
         });
         toast.success(`Device successfully created`);
